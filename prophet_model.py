@@ -12,8 +12,9 @@ import fbprophet
 plt.style.use('ggplot')
 
 # constants
-COUNTRY = 'South Africa'
-POP_CAP = 20000  # population ceiling that model can grow to - i found that making this lower gave better predcitions
+COUNTRY = 'China'
+POP_CAP = 50000  # population ceiling that model can grow to
+#  - i found that making this lower than the actual pop gave better predictions
 INITIAL_PERIOD = '5 Days'
 PROJECTION_HORIZON = '5 Days'  # number of days into the future to forecast (projection period)
 PROJECTION_PERIOD = '1 days' 	# number of days to skip before starting a new projection period
@@ -133,8 +134,8 @@ confirmed_cases_df = kaggle_api.get_confirmed_time_series_data().drop(
 	n_changepoints=N_CAHNGEPOINTS
 )
 
-forecast_data.to_csv('prophet_output/predictions_daysfuture_%s_popcap_%s.csv' % (FORECAST_PERIODS, POP_CAP))
-fig.savefig('prophet_output/predictions_daysfuture_%s_popcap_%s.png' % (FORECAST_PERIODS, POP_CAP))
+forecast_data.to_csv('prophet_output/predictions_country_%s_daysfuture_%s_popcap_%s.csv' % (COUNTRY, FORECAST_PERIODS, POP_CAP))
+fig.savefig('prophet_output/predictions_country_%s_daysfuture_%s_popcap_%s.png' % (COUNTRY, FORECAST_PERIODS, POP_CAP))
 forecast_data.head(100)
 
 
