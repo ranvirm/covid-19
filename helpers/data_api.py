@@ -20,22 +20,29 @@ class KaggleDataApi(object):
 
 	@staticmethod
 	def get_confirmed_time_series_data():
-		os.system('kaggle datasets download -f time_series_covid_19_confirmed.csv -p data/ sudalairajkumar/novel-corona-virus-2019-dataset')
-		df = pd.read_csv('data/time_series_covid_19_confirmed.csv')
+		# os.system('kaggle datasets download -f time_series_covid_19_confirmed.csv -p data/ sudalairajkumar/novel-corona-virus-2019-dataset')
+		# df = pd.read_csv('data/time_series_covid_19_confirmed.csv')
+		df = pd.read_csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv')
 		df['Country'] = df['Country/Region']
 		return df
 
 	@staticmethod
 	def get_deaths_time_series_data():
-		os.system('kaggle datasets download -f time_series_covid_19_deaths.csv -p data/ sudalairajkumar/novel-corona-virus-2019-dataset')
-		df = pd.read_csv('data/time_series_covid_19_deaths.csv')
+		# os.system('kaggle datasets download -f time_series_covid_19_deaths.csv -p data/ sudalairajkumar/novel-corona-virus-2019-dataset')
+		# df = pd.read_csv('data/time_series_covid_19_deaths.csv')
+		df = pd.read_csv(
+			'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv')
+
 		df['Country'] = df['Country/Region']
 		return df
 
 	@staticmethod
 	def get_recovered_time_series_data():
-		os.system('kaggle datasets download -f time_series_covid_19_recovered.csv-p data/ sudalairajkumar/novel-corona-virus-2019-dataset')
-		df = pd.read_csv('data/time_series_covid_19_recovered.csv')
+		# os.system('kaggle datasets download -f time_series_covid_19_recovered.csv-p data/ sudalairajkumar/novel-corona-virus-2019-dataset')
+		# df = pd.read_csv('data/time_series_covid_19_recovered.csv')
+		df = pd.read_csv(
+			'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv')
+
 		df['Country'] = df['Country/Region']
 		return df
 
