@@ -12,13 +12,14 @@ import fbprophet
 plt.style.use('ggplot')
 
 # constants
-COUNTRY = 'US'
+COUNTRY = 'South Africa'
 POP_CAP = 20000  # population ceiling that model can grow to - i found that making this lower gave better predcitions
-PROJECTION_HORIZON = '7 Days'  # number of days into the future to forecast (projection period)
+INITIAL_PERIOD = '5 Days'
+PROJECTION_HORIZON = '5 Days'  # number of days into the future to forecast (projection period)
 PROJECTION_PERIOD = '1 days' 	# number of days to skip before starting a new projection period
 
 
-def forecast(df, country, pop_cap, projection_horizon, projection_period):
+def forecast(df, country, pop_cap, projection_horizon, projection_period, initial_period=None):
 	ts_data = df[df.Country==country].drop(columns='Country')
 	# pivot into ts format prophet requires
 	ts_data = pd.melt(ts_data)
@@ -39,7 +40,10 @@ def forecast(df, country, pop_cap, projection_horizon, projection_period):
 	model.fit(ts_data)
 
 	# generate predictions
-	cv_df = cross_validation(model, period=projection_period, horizon=projection_horizon)
+	if initial_period:
+		cv_df = cross_validation(model, initial=initial_period, period=projection_period, horizon=projection_horizon)
+	else:
+		cv_df = cross_validation(model, period=projection_period, horizon=projection_horizon)
 	cv_df['error'] = cv_df['y'] - cv_df['yhat']
 	cv_df['percent_error'] = ((cv_df['yhat'] - cv_df['y'])/cv_df['y']) * 100
 	cv_df = cv_df.rename(columns={'cutoff': 'reference_date'})
@@ -69,7 +73,8 @@ confirmed_cases_df = kaggle_api.get_confirmed_time_series_data().drop(
 	country=COUNTRY,
 	pop_cap=POP_CAP,
 	projection_horizon=PROJECTION_HORIZON,
-	projection_period=PROJECTION_PERIOD
+	projection_period=PROJECTION_PERIOD,
+	initial_period=INITIAL_PERIOD
 )
 
 forcast_data.head(100)
