@@ -15,34 +15,35 @@ class KaggleDataApi(object):
 	def get_daily_level_data():
 		os.system('kaggle datasets download -f covid_19_data.csv -p data/ sudalairajkumar/novel-corona-virus-2019-dataset')
 		df = pd.read_csv('data/covid_19_data.csv')
-		df['County'] = df['Country/Region']
+		df['Country'] = df['Country/Region']
 		return df
 
 	@staticmethod
 	def get_confirmed_time_series_data():
 		os.system('kaggle datasets download -f time_series_covid_19_confirmed.csv -p data/ sudalairajkumar/novel-corona-virus-2019-dataset')
 		df = pd.read_csv('data/time_series_covid_19_confirmed.csv')
-		df['County'] = df['Country/Region']
+		df['Country'] = df['Country/Region']
 		return df
 
 	@staticmethod
 	def get_deaths_time_series_data():
 		os.system('kaggle datasets download -f time_series_covid_19_deaths.csv -p data/ sudalairajkumar/novel-corona-virus-2019-dataset')
 		df = pd.read_csv('data/time_series_covid_19_deaths.csv')
-		df['County'] = df['Country/Region']
+		df['Country'] = df['Country/Region']
 		return df
 
 	@staticmethod
 	def get_recovered_time_series_data():
 		os.system('kaggle datasets download -f time_series_covid_19_recovered.csv-p data/ sudalairajkumar/novel-corona-virus-2019-dataset')
 		df = pd.read_csv('data/time_series_covid_19_recovered.csv')
-		df['County'] = df['Country/Region']
+		df['Country'] = df['Country/Region']
 		return df
 
 
 class WorldBankDataApi(object):
 
-	def indicators(self):
+	@staticmethod
+	def indicators():
 		indicators = [
 			'UNDP.HDI.XD',  # human development index HDI
 			'2.0.hoi.Cel',  # Mobile phone
@@ -79,7 +80,8 @@ class WorldBankDataApi(object):
 		]
 		return indicators
 
-	def get_series_data(self, series, date='2019'):
+	@staticmethod
+	def get_series_data(series, date='2019'):
 		df = wb.get_series(series, mrv=1, date=date)
 		df = df.to_frame()
 		df = df.reset_index()

@@ -5,8 +5,13 @@ import pandas as pd
 kaggle_api = data_api.KaggleDataApi()
 world_bank_api = data_api.WorldBankDataApi()
 
-# get confirmed cases data
-confirmed_cases_df = kaggle_api.get_confirmed_time_series_data()
+# get confirmed cases data - time series across countries
+# also avail is deaths and recoveries
+confirmed_cases_df = kaggle_api.get_confirmed_time_series_data().drop(columns=['Province/State', 'Country/Region', 'Lat', 'Long'])
+
+deaths_cases_df = kaggle_api.get_deaths_time_series_data().drop(columns=['Province/State', 'Country/Region', 'Lat', 'Long'])
+
+recoveries_cases_df = kaggle_api.get_recovered_time_series_data().drop(columns=['Province/State', 'Country/Region', 'Lat', 'Long'])
 
 # get country data
 country_df= world_bank_api.get_all_data()
