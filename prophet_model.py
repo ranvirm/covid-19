@@ -17,9 +17,12 @@ POP_CAP = 20000  # population ceiling that model can grow to - i found that maki
 INITIAL_PERIOD = '5 Days'
 PROJECTION_HORIZON = '5 Days'  # number of days into the future to forecast (projection period)
 PROJECTION_PERIOD = '1 days' 	# number of days to skip before starting a new projection period
+N_CAHNGEPOINTS = 3
+FORECAST_PERIODS = 5
 
 
-def forecast(df, country, pop_cap, projection_horizon, projection_period, initial_period=None):
+# define models
+def cv_forecast(df, country, pop_cap, projection_horizon, projection_period, initial_period=None):
 	ts_data = df[df.Country==country].drop(columns='Country')
 	# pivot into ts format prophet requires
 	ts_data = pd.melt(ts_data)
@@ -60,6 +63,44 @@ def forecast(df, country, pop_cap, projection_horizon, projection_period, initia
 	return cv_df, fig
 
 
+def forecast(df, country, pop_cap, forecast_periods, n_changepoints):
+	ts_data = df[df.Country == country].drop(columns='Country')
+	# pivot into ts format prophet requires
+	ts_data = pd.melt(ts_data)
+	# format time
+	ts_data['ds'] = ts_data['variable'].apply(lambda x: pd.datetime.strptime(x, '%m/%d/%y')).drop(columns=['variable'])
+	# rename cols
+	ts_data = ts_data.rename(columns={"value": "y"})
+	# group by country and sum obs - due to some countries being divided by region/ state/ province
+	ts_data = ts_data.groupby(by='ds')['y'].sum().reset_index()
+	ts_data = ts_data[ts_data['y'] > 0]
+	# create population cap col for prophet growth model
+	ts_data['cap'] = pop_cap
+	# sort df
+	ts_data = ts_data.sort_values(by='ds')
+
+	# basic model
+	model = Prophet(growth='logistic', n_changepoints=n_changepoints)  # , changepoint_prior_scale=0.0008)
+	model.fit(ts_data)
+
+	# df for forecasts
+	future = model.make_future_dataframe(periods=forecast_periods)
+	future['cap'] = pop_cap
+	forecast_df = model.predict(future)
+
+	fig = model.plot(forecast_df)
+
+	# # simple plot
+	# fig = plt.figure()
+	# ax = plt.axes()
+	# x = cv_df['ds']
+	# ax.plot(x, cv_df['y'], color='red')
+	# ax.plot(x, cv_df['yhat'], color='blue', linestyle='dashdot')
+	# # ax.plot(x, cv_df['yhat_lower'], color='green', linestyle='dotted')
+	# # ax.plot(x, cv_df['yhat_upper'], color='green', linestyle='dotted')
+	return forecast_df, fig
+
+
 # init data api
 kaggle_api = data_api.KaggleDataApi()
 
@@ -68,17 +109,33 @@ confirmed_cases_df = kaggle_api.get_confirmed_time_series_data().drop(
 	columns=['Province/State', 'Country/Region', 'Lat', 'Long']
 )
 
-(forcast_data, fig) = forecast(
+# uncomment to do cv forecasting - to measure model performance
+# (forecast_data, fig) = cv_forecast(
+# 	df=confirmed_cases_df,
+# 	country=COUNTRY,
+# 	pop_cap=POP_CAP,
+# 	projection_horizon=PROJECTION_HORIZON,
+# 	projection_period=PROJECTION_PERIOD,
+# 	initial_period=INITIAL_PERIOD
+# )
+#
+# forecast_data.to_csv('prophet_output/predictions_daysfuture_%_popcap_%.csv')
+# forecast_data.head(100)
+# fig.show()
+
+
+# generate forecasts for forecast_periods days into the future
+(forecast_data, fig) = forecast(
 	df=confirmed_cases_df,
 	country=COUNTRY,
 	pop_cap=POP_CAP,
-	projection_horizon=PROJECTION_HORIZON,
-	projection_period=PROJECTION_PERIOD,
-	initial_period=INITIAL_PERIOD
+	forecast_periods=5,
+	n_changepoints=N_CAHNGEPOINTS
 )
 
-forcast_data.head(100)
-fig.show()
+forecast_data.to_csv('prophet_output/predictions_daysfuture_%s_popcap_%s.csv' % (FORECAST_PERIODS, POP_CAP))
+fig.savefig('prophet_output/predictions_daysfuture_%s_popcap_%s.png' % (FORECAST_PERIODS, POP_CAP))
+forecast_data.head(100)
 
 
 
