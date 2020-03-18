@@ -163,7 +163,6 @@ for param in params:
 		n_changepoints=param['n_changepoints']
 	)
 
-
 	forecast_data[['ds', 'yhat_lower', 'yhat_upper', 'yhat', 'trend', 'cap']].to_csv(
 		'prophet_output/runtime_%s/predictions_data_country_%s_daysfuture_%s_popcap_%s.csv' % (runtime, param['country'], param['forecast_periods'], param['pop_cap'])
 	)

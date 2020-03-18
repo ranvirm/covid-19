@@ -5,7 +5,7 @@ import world_bank_data as wb
 
 class KaggleDataFetcher(object):
 	def __init__(self, api_token=None):
-		self.api_token = api_token if api_token else {"username": "ranvir", "key": "c6e75c4f84ec7e43374893e4a4de349e"}
+		self.api_token = api_token if api_token else {"username": "xx", "key": "xx"}  # hard code default api key
 
 		# export api credentials
 		os.environ['KAGGLE_USERNAME'] = self.api_token['username']
