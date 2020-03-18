@@ -1,31 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="17b00392-2ba3-4c75-a866-e87a430be4e9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/prophet_model_bulk_run.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prophet_output/old/predictions_country_South Africa_daysfuture_14_popcap_5000.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prophet_output/old/predictions_country_South Africa_daysfuture_14_popcap_5000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prophet_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/prophet_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prophet_output/predictions_country_China_daysfuture_5_popcap_100000.csv" beforeDir="false" afterPath="$PROJECT_DIR$/prophet_output/old/predictions_country_China_daysfuture_5_popcap_100000.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prophet_output/predictions_country_China_daysfuture_5_popcap_100000.png" beforeDir="false" afterPath="$PROJECT_DIR$/prophet_output/old/predictions_country_China_daysfuture_5_popcap_100000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prophet_output/predictions_country_China_daysfuture_5_popcap_50000.csv" beforeDir="false" afterPath="$PROJECT_DIR$/prophet_output/old/predictions_country_China_daysfuture_5_popcap_50000.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prophet_output/predictions_country_China_daysfuture_5_popcap_50000.png" beforeDir="false" afterPath="$PROJECT_DIR$/prophet_output/old/predictions_country_China_daysfuture_5_popcap_50000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prophet_output/predictions_country_South Africa_daysfuture_14_popcap_5000.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/prophet_output/predictions_country_South Africa_daysfuture_14_popcap_5000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/prophet_output/predictions_country_US_daysfuture_5_popcap_20000.csv" beforeDir="false" afterPath="$PROJECT_DIR$/prophet_output/old/predictions_country_US_daysfuture_5_popcap_20000.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prophet_output/predictions_country_US_daysfuture_5_popcap_20000.png" beforeDir="false" afterPath="$PROJECT_DIR$/prophet_output/old/predictions_country_US_daysfuture_5_popcap_20000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prophet_output/predictions_daysfuture_5_popcap_10000.csv" beforeDir="false" afterPath="$PROJECT_DIR$/prophet_output/old/predictions_daysfuture_5_popcap_10000.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prophet_output/predictions_daysfuture_5_popcap_10000.png" beforeDir="false" afterPath="$PROJECT_DIR$/prophet_output/old/predictions_daysfuture_5_popcap_10000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prophet_output/predictions_daysfuture_5_popcap_2000.csv" beforeDir="false" afterPath="$PROJECT_DIR$/prophet_output/old/predictions_daysfuture_5_popcap_2000.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prophet_output/predictions_daysfuture_5_popcap_2000.png" beforeDir="false" afterPath="$PROJECT_DIR$/prophet_output/old/predictions_daysfuture_5_popcap_2000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prophet_output/predictions_daysfuture_5_popcap_20000.csv" beforeDir="false" afterPath="$PROJECT_DIR$/prophet_output/old/predictions_daysfuture_5_popcap_20000.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prophet_output/predictions_daysfuture_5_popcap_20000.png" beforeDir="false" afterPath="$PROJECT_DIR$/prophet_output/old/predictions_daysfuture_5_popcap_20000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prophet_output/predictions_daysfuture_5_popcap_4000.csv" beforeDir="false" afterPath="$PROJECT_DIR$/prophet_output/old/predictions_daysfuture_5_popcap_4000.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prophet_output/predictions_daysfuture_5_popcap_4000.png" beforeDir="false" afterPath="$PROJECT_DIR$/prophet_output/old/predictions_daysfuture_5_popcap_4000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prophet_output/predictions_daysfuture_5_popcap_5000.csv" beforeDir="false" afterPath="$PROJECT_DIR$/prophet_output/old/predictions_daysfuture_5_popcap_5000.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prophet_output/predictions_daysfuture_5_popcap_5000.png" beforeDir="false" afterPath="$PROJECT_DIR$/prophet_output/old/predictions_daysfuture_5_popcap_5000.png" afterDir="false" />
-    </list>
+    <list default="true" id="17b00392-2ba3-4c75-a866-e87a430be4e9" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,8 +79,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/prophet_model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="501">
-              <caret line="137" lean-forward="true" selection-start-line="137" selection-end-line="137" />
+            <state relative-caret-position="453">
+              <caret line="128" column="42" lean-forward="true" selection-start-line="128" selection-start-column="42" selection-end-line="128" selection-end-column="42" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
                 <element signature="e#798#2205#0" />
@@ -118,7 +94,7 @@
         <entry file="file://$PROJECT_DIR$/prophet_model_bulk_run.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="164">
-              <caret line="150" lean-forward="true" selection-start-line="150" selection-end-line="154" selection-end-column="52" />
+              <caret line="150" selection-start-line="150" selection-end-line="154" selection-end-column="52" />
               <folding>
                 <element signature="e#1#30#0" expanded="true" />
                 <element signature="e#1284#2835#0" />
@@ -308,7 +284,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23819743" />
@@ -317,11 +292,11 @@
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
       <window_info anchor="bottom" id="Python Console" weight="0.1879518" />
-      <window_info anchor="bottom" id="Terminal" weight="0.32891566" />
+      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32891566" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.25783134" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.25783134" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -468,7 +443,7 @@
     <entry file="file://$PROJECT_DIR$/prophet_model_bulk_run.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="164">
-          <caret line="150" lean-forward="true" selection-start-line="150" selection-end-line="154" selection-end-column="52" />
+          <caret line="150" selection-start-line="150" selection-end-line="154" selection-end-column="52" />
           <folding>
             <element signature="e#1#30#0" expanded="true" />
             <element signature="e#1284#2835#0" />
@@ -478,8 +453,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/prophet_model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="501">
-          <caret line="137" lean-forward="true" selection-start-line="137" selection-end-line="137" />
+        <state relative-caret-position="453">
+          <caret line="128" column="42" lean-forward="true" selection-start-line="128" selection-start-column="42" selection-end-line="128" selection-end-column="42" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
             <element signature="e#798#2205#0" />
