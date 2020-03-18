@@ -3,7 +3,7 @@ import pandas as pd
 import world_bank_data as wb
 
 
-class KaggleDataApi(object):
+class KaggleDataFetcher(object):
 	def __init__(self, api_token=None):
 		self.api_token = api_token if api_token else {"username": "ranvir", "key": "c6e75c4f84ec7e43374893e4a4de349e"}
 
@@ -47,7 +47,7 @@ class KaggleDataApi(object):
 		return df
 
 
-class WorldBankDataApi(object):
+class WorldBankDataFetcher(object):
 
 	@staticmethod
 	def indicators():

@@ -5,7 +5,7 @@ from fbprophet.plot import plot_plotly
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from helpers import data_api
+from helpers import data_fetchers
 import fbprophet
 from datetime import datetime
 import os
@@ -106,10 +106,10 @@ def forecast(df, country, pop_cap, forecast_periods, n_changepoints):
 
 
 # init data api
-kaggle_api = data_api.KaggleDataApi()
+kaggle_data_fetcher = data_fetchers.KaggleDataFetcher()
 
 # get confirmed cases data
-confirmed_cases_df = kaggle_api.get_confirmed_time_series_data().drop(
+confirmed_cases_df = kaggle_data_fetcher.get_confirmed_time_series_data().drop(
 	columns=['Province/State', 'Country/Region', 'Lat', 'Long']
 )
 
