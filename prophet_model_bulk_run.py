@@ -113,7 +113,39 @@ confirmed_cases_df = kaggle_api.get_confirmed_time_series_data().drop(
 	columns=['Province/State', 'Country/Region', 'Lat', 'Long']
 )
 
-# run model
+# generate forecasts for forecast_periods days into the future
+params = [
+	{
+		'country': 'South Africa',
+		'pop_cap': 2000,
+		'forecast_periods': 14,
+		'n_changepoints': 3
+	},
+	{
+		'country': 'South Africa',
+		'pop_cap': 3000,
+		'forecast_periods': 14,
+		'n_changepoints': 3
+	},
+	{
+		'country': 'South Africa',
+		'pop_cap': 4000,
+		'forecast_periods': 14,
+		'n_changepoints': 3
+	},
+	{
+		'country': 'South Africa',
+		'pop_cap': 5000,
+		'forecast_periods': 14,
+		'n_changepoints': 3
+	},
+	{
+		'country': 'South Africa',
+		'pop_cap': 10000,
+		'forecast_periods': 14,
+		'n_changepoints': 3
+	}
+]
 runtime = datetime.now().strftime('%Y-%m-%d_%H:%M')
 
 if os.path.exists('prophet_output/runtime_%s/' % runtime):
@@ -122,23 +154,18 @@ if os.path.exists('prophet_output/runtime_%s/' % runtime):
 else:
 	os.mkdir('prophet_output/runtime_%s/' % runtime)
 
-(forecast_data, fig) = cv_forecast(
-	df=confirmed_cases_df,
-	country=COUNTRY,
-	pop_cap=POP_CAP,
-	projection_horizon=PROJECTION_HORIZON,
-	projection_period=PROJECTION_PERIOD,
-	initial_period=INITIAL_PERIOD
-)
-
-# save outputs
-forecast_data.to_csv('prophet_output/runtime_%s/predictions_data_country_%s_daysfuture_%s_popcap_%s.csv' % (runtime, COUNTRY, FORECAST_PERIODS, POP_CAP))
-fig.savefig('prophet_output/runtime_%s/predictions_graph_country_%s_daysfuture_%s_popcap_%s.png' % (runtime, COUNTRY, FORECAST_PERIODS, POP_CAP))
+for param in params:
+	(forecast_data, fig) = forecast(
+		df=confirmed_cases_df,
+		country=param['country'],
+		pop_cap=param['pop_cap'],
+		forecast_periods=param['forecast_periods'],
+		n_changepoints=param['n_changepoints']
+	)
 
 
-
-
-
-
-
+	forecast_data[['ds', 'yhat_lower', 'yhat_upper', 'yhat', 'trend', 'cap']].to_csv(
+		'prophet_output/runtime_%s/predictions_data_country_%s_daysfuture_%s_popcap_%s.csv' % (runtime, param['country'], param['forecast_periods'], param['pop_cap'])
+	)
+	fig.savefig('prophet_output/runtime_%s/predictions_graph_country_%s_daysfuture_%s_popcap_%s.png' % (runtime, param['country'], param['forecast_periods'], param['pop_cap']))
 
