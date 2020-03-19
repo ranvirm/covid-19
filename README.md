@@ -21,4 +21,5 @@
     ```bash
     python prophet_model.py
     ```
+    Output files will be written to _./prophet_output_ dir
 _Change defaults such as the target country by editing prophet_model.py_
