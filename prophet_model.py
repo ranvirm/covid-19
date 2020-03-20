@@ -70,7 +70,7 @@ def forecast(df, country, pop_cap, forecast_periods, n_changepoints):
 	ts_data = df[df.Country == country].drop(columns='Country')
 	# pivot into ts format prophet requires
 	ts_data = pd.melt(ts_data)
-	ts_data.iloc[55, 1:] = 84  # manual fix for emergency run
+	# ts_data.iloc[55, 1:] = 84  # manual fix for emergency run
 	# format time
 	ts_data['ds'] = ts_data['variable'].apply(lambda x: pd.datetime.strptime(x, '%m/%d/%y')).drop(columns=['variable'])
 	# rename cols
