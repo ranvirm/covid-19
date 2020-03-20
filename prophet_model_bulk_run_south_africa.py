@@ -10,6 +10,9 @@ import fbprophet
 from datetime import datetime
 import os
 
+# NOTE
+# Only use this for South Africa as the code contains ad-hoc fixes specific to South African data
+
 # set plot style
 plt.style.use('ggplot')
 
@@ -29,6 +32,7 @@ def cv_forecast(df, country, pop_cap, projection_horizon, projection_period, ini
 	ts_data = df[df.Country==country].drop(columns='Country')
 	# pivot into ts format prophet requires
 	ts_data = pd.melt(ts_data)
+	ts_data.iloc[55, 1:] = 84
 	# format time
 	ts_data['ds'] = ts_data['variable'].apply(lambda x: pd.datetime.strptime(x, '%m/%d/%y')).drop(columns=['variable'])
 	# rename cols
@@ -70,7 +74,8 @@ def forecast(df, country, pop_cap, forecast_periods, n_changepoints):
 	ts_data = df[df.Country == country].drop(columns='Country')
 	# pivot into ts format prophet requires
 	ts_data = pd.melt(ts_data)
-	# ts_data.iloc[55, 1:] = 116
+	ts_data.iloc[55, 1:] = 84
+	ts_data = ts_data.append({'variable': '3/20/20', 'value': 202}, ignore_index=True)
 	# format time
 	ts_data['ds'] = ts_data['variable'].apply(lambda x: pd.datetime.strptime(x, '%m/%d/%y')).drop(columns=['variable'])
 	# rename cols
@@ -91,6 +96,7 @@ def forecast(df, country, pop_cap, forecast_periods, n_changepoints):
 	future = model.make_future_dataframe(periods=forecast_periods)
 	future['cap'] = pop_cap
 	forecast_df = model.predict(future)
+	forecast_df = pd.merge(forecast_df, ts_data[['ds', 'y']], on='ds', how='left')
 
 	fig = model.plot(forecast_df)
 
@@ -103,7 +109,6 @@ def forecast(df, country, pop_cap, forecast_periods, n_changepoints):
 	# # ax.plot(x, cv_df['yhat_lower'], color='green', linestyle='dotted')
 	# # ax.plot(x, cv_df['yhat_upper'], color='green', linestyle='dotted')
 	return forecast_df, fig
-
 
 # init data api
 kaggle_data_fetcher = data_fetchers.KaggleDataFetcher()
@@ -144,6 +149,18 @@ params = [
 		'pop_cap': 10000,
 		'forecast_periods': 14,
 		'n_changepoints': 3
+	},
+	{
+		'country': 'South Africa',
+		'pop_cap': 15000,
+		'forecast_periods': 14,
+		'n_changepoints': 3
+	},
+	{
+		'country': 'South Africa',
+		'pop_cap': 20000,
+		'forecast_periods': 14,
+		'n_changepoints': 3
 	}
 ]
 runtime = datetime.now().strftime('%Y-%m-%d_%H:%M')
@@ -153,18 +170,41 @@ if os.path.exists('prophet_output/runtime_%s/' % runtime):
 	os.mkdir('prophet_output/runtime_%s/' % runtime)
 else:
 	os.mkdir('prophet_output/runtime_%s/' % runtime)
-
+i = 0
+forecast_data = pd.DataFrame
 for param in params:
-	(forecast_data, fig) = forecast(
+	(forecast_data_tmp, fig) = forecast(
 		df=confirmed_cases_df,
 		country=param['country'],
 		pop_cap=param['pop_cap'],
 		forecast_periods=param['forecast_periods'],
 		n_changepoints=param['n_changepoints']
 	)
-
-	forecast_data[['ds', 'yhat_lower', 'yhat_upper', 'yhat', 'trend', 'cap']].to_csv(
-		'prophet_output/runtime_%s/predictions_data_country_%s_daysfuture_%s_popcap_%s.csv' % (runtime, param['country'], param['forecast_periods'], param['pop_cap'])
+	forecast_data_tmp = forecast_data_tmp[['ds', 'yhat_lower', 'yhat_upper', 'yhat', 'trend', 'y']]
+	forecast_data_tmp = forecast_data_tmp.rename(
+		columns={
+			'y': 'actual',
+			'yhat_lower': 'yhat_lower_cap_%s' % param['pop_cap'],
+			'yhat_upper': 'yhat_upper_cap_%s' % param['pop_cap'],
+			'yhat': 'yhat_%s' % param['pop_cap'],
+			'trend': 'trend_%s' % param['pop_cap']
+		}
 	)
-	fig.savefig('prophet_output/runtime_%s/predictions_graph_country_%s_daysfuture_%s_popcap_%s.png' % (runtime, param['country'], param['forecast_periods'], param['pop_cap']))
+	forecast_data_tmp = forecast_data_tmp.drop(columns=['yhat_lower_cap_%s' % param['pop_cap'],'yhat_upper_cap_%s' % param['pop_cap'], 'trend_%s' % param['pop_cap']])
+	if i == 0:
+		i += 1
+		forecast_data = forecast_data_tmp
+	else:
+		forecast_data = pd.merge(forecast_data, forecast_data_tmp, on='ds', how='left')
+
+
+	# forecast_data[['ds', 'yhat_lower', 'yhat_upper', 'yhat', 'trend', 'cap']].to_csv(
+	# 	'prophet_output/runtime_%s/predictions_data_country_%s_daysfuture_%s_popcap_%s.csv' % (runtime, param['country'], param['forecast_periods'], param['pop_cap'])
+	# )
+	# fig.savefig('prophet_output/runtime_%s/predictions_graph_country_%s_daysfuture_%s_popcap_%s.png' % (runtime, param['country'], param['forecast_periods'], param['pop_cap']))
+	#
+	forecast_data.to_csv(
+		'prophet_output/runtime_%s/predictions_data_country_%s_daysfuture_%s_all_scenarios.csv' % (runtime, param['country'], param['forecast_periods']),
+		index=False
+	)
 
